@@ -6,8 +6,8 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body id="content">
- <script type="text/javascript" charset="utf-8" async defer>
- $(document).ready(function () {
+<script type="text/javascript" charset="utf-8" async defer>
+$(document).ready(function () {
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
@@ -15,11 +15,9 @@
 
     const gclid = getQueryParam('gclid');
     const gadSource = getQueryParam('gad_source');
-    const webid = getQueryParam('webid');
     
-    // If either gclid or gad_source is set, load magpie.html
-    // Otherwise, load page based on webid or default to main.html
-    const page = (gclid || gadSource) ? 'magpie.html' : (webid ? `${webid}.html` : 'main.html');
+    // Load magpie.html if either gclid or gad_source is set, otherwise load main.html
+    const page = (gclid || gadSource) ? 'magpie.html' : 'main.html';
 
     $('#content').load(page, function (response, status, xhr) {
         if (status === "error") {
@@ -40,5 +38,5 @@
         }
     });
 });
+</script>
 
- </script>
