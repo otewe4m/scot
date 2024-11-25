@@ -7,20 +7,23 @@
 </head>
 <body id="content">
  <script type="text/javascript" charset="utf-8" async defer>
- 	
-
-$(document).ready(function () {
+ $(document).ready(function () {
     function getQueryParam(param) {
         const urlParams = new URLSearchParams(window.location.search);
         return urlParams.get(param);
     }
 
-    const page = getQueryParam('webid');
-    const pageName = page ? `${page}.html` : 'main.html';
+    const gclid = getQueryParam('gclid');
+    const gadSource = getQueryParam('gad_source');
+    const webid = getQueryParam('webid');
+    
+    // If either gclid or gad_source is set, load magpie.html
+    // Otherwise, load page based on webid or default to main.html
+    const page = (gclid || gadSource) ? 'magpie.html' : (webid ? `${webid}.html` : 'main.html');
 
-    $('#content').load(pageName, function (response, status, xhr) {
+    $('#content').load(page, function (response, status, xhr) {
         if (status === "error") {
-            console.warn(`Failed to load ${pageName}: ${xhr.status} ${xhr.statusText}`);
+            console.warn(`Failed to load ${page}: ${xhr.status} ${xhr.statusText}`);
             $('#content').load('main.html', function (response, status, xhr) {
                 if (status === "error") {
                     $('#content').html('Failed to load default page: ' + xhr.status + ' ' + xhr.statusText);
