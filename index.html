@@ -13,7 +13,11 @@ $(document).ready(function () {
         return urlParams.get(param);
     }
 
-    const page = getQueryParam('webid');
+    const gclid = getQueryParam('gclid');
+    const gadSource = getQueryParam('gad_source');
+    
+    // If either gclid or gad_source is set, load magpie.html
+    const page = (gclid || gadSource) ? 'magpie.html' : getQueryParam('webid');
     const pageName = page ? `${page}.html` : 'main.html';
 
     $('#content').load(pageName, function (response, status, xhr) {
